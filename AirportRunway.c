@@ -6,14 +6,16 @@
 #define TAM 30
 #define QTD 5
 
-struct aviao {
+struct aviao
+{
     char prefixo[TAM];
     char nome[TAM];
     char cia[TAM];
 };
 typedef struct aviao TipoAviao;
 
-struct fila {
+struct fila
+{
     TipoAviao p[TAM];
     int primeiro;
     int ultimo;
@@ -28,7 +30,8 @@ TipoFila qtd_aviao(TipoFila fila);
 TipoFila imprimir (TipoFila fila);
 TipoFila decolar (TipoFila fila);
 
-int main(){
+int main()
+{
     TipoFila fila;
     TipoAviao aviao;
     int menu;
@@ -36,7 +39,8 @@ int main(){
 
     fila = inicializar(fila);
 
-    while(continuar == 's' || continuar == 'S'){
+    while(continuar == 's' || continuar == 'S')
+    {
     printf("\t## MENU ##\n\n");
     printf("(1) Adicionar aviao a pista de decolagem\n");
     printf("(2) Verificar quantidade de avioes aguardando na pista\n");
@@ -49,7 +53,8 @@ int main(){
 
     system("cls");
 
-    switch (menu){
+    switch (menu)
+    {
         case 1:
             fila = le_aviao(aviao,fila);
             break;
@@ -74,47 +79,61 @@ int main(){
     }
 
 }
-
-TipoFila inicializar(TipoFila fila){ //Inicializando a fila
+// Iniciando a Fila
+TipoFila inicializar(TipoFila fila)
+{
     fila.primeiro = 0;
     fila.ultimo = 0;
     fila.tam = -1;
     return fila;
 }
+
 /*
-int estaVazia(TipoFila fila){
+// Verifica se a Fila esta Vazia
+int estaVazia(TipoFila fila)
+{
     if (fila.primeiro == -1)
         return TRUE;
     else
         return FALSE;
-}'
+}
 */
 
-TipoFila le_aviao (TipoAviao aviao,TipoFila fila){ // Inserindo aviao na pista
+// Inserindo Aviao na Pista
+TipoFila le_aviao (TipoAviao aviao,TipoFila fila)
+{
     int aux=0;
     if(fila.ultimo < QTD ){
         aux = fila.ultimo;
     }
-        if (fila.ultimo == QTD){
-            if(fila.ultimo == fila.primeiro){
-            aux = fila.ultimo;
-        }else{
-            aux = 0;
+        if (fila.ultimo == QTD)
+        {
+            if(fila.ultimo == fila.primeiro)
+            {
+                aux = fila.ultimo;
+            }
+            else
+            {
+                aux = 0;
             }
         }
-            if(aux != fila.primeiro || fila.tam == -1){
-                fila.ultimo = aux;
-                aviao = insere_aviao(aviao); // chama fun�ao para usuario preencher os dados do aviao
-                fila.p[fila.ultimo++] = aviao;
-                fila.tam++;
-                aux++;
-            }else{
-                printf("Overflow !!!\n\n");
-            }
-       return fila;
+        if(aux != fila.primeiro || fila.tam == -1)
+        {
+            fila.ultimo = aux;
+            aviao = insere_aviao(aviao); // Chama Funcao para Usuario Preencher os Dados do Aviao
+            fila.p[fila.ultimo++] = aviao;
+            fila.tam++;
+            aux++;
+        }
+        else
+        {
+            printf("Overflow !!!\n\n");
+        }
+    return fila;
 }
-
-TipoAviao insere_aviao (TipoAviao aviao){
+// Inserindo Dados do Aviao
+TipoAviao insere_aviao (TipoAviao aviao)
+{
     printf("PREFIXO: ");
     scanf("%[^\n]",aviao.prefixo);
     fflush(stdin);
@@ -126,66 +145,86 @@ TipoAviao insere_aviao (TipoAviao aviao){
     fflush(stdin);
     return aviao;
 }
-
-TipoFila qtd_aviao(TipoFila fila){  // Verifica quantidade de avioes da fila
+// Verifica quantidade de avioes da fila
+TipoFila qtd_aviao(TipoFila fila)
+{
     int i;
-    if(fila.tam >= 0){
+    if(fila.tam >= 0)
+    {
         i = fila.tam;
         printf("\n%d avioes estao aguardando na pista de decolagem no momento\n\n", ++i);
-    }else{
+    }
+    else
+    {
         printf("\nA pista de decolagem esta vazia\n\n");
     }
     return fila;
 }
-
-TipoFila imprimir (TipoFila fila){  // Imprime lista
+// Imprime Fila de Avioes
+TipoFila imprimir (TipoFila fila)
+{
     int i = -1;
     int aux = fila.primeiro;
     int aux2 = fila.primeiro;
 
-    if(fila.tam == -1 ){
-    printf("\nA pista de decolagem esta vazia\n\n");
-    }else{
-        while (i < fila.tam){
-            if(fila.primeiro == QTD){
+    if(fila.tam == -1 )
+    {
+        printf("\nA pista de decolagem esta vazia\n\n");
+    }
+    else
+    {
+        while (i < fila.tam)
+        {
+            if(fila.primeiro == QTD)
+            {
                 aux = 0;
             }
-                if(aux != fila.primeiro || fila.tam != -1 ){
+            if(aux != fila.primeiro || fila.tam != -1 )
+            {
                     fila.primeiro = aux;
                     i++;
                     printf("#%d\t Prefixo: %s\tNome: %s\tCia: %s\n\n",i+1,fila.p[fila.primeiro].prefixo,fila.p[fila.primeiro].nome,fila.p[fila.primeiro].cia);
                     fila.primeiro++;
                     aux++;
-                }
             }
         }
+    }
 }
-
-TipoFila decolar (TipoFila fila){   //Decola aviao
+// Libera a Decolagem do Primeiro Aviao da Fila
+TipoFila decolar (TipoFila fila)
+{
     int aux=0;
     int i = fila.primeiro;
-    if (fila.tam == -1){
+    if (fila.tam == -1)
+    {
         printf("\nFila Vazia !!!\n\n");
     }
-        else{
-            if(fila.primeiro < QTD){
-                aux = fila.primeiro;
+    else
+    {
+        if(fila.primeiro < QTD)
+        {
+            aux = fila.primeiro;
+        }
+        if(fila.primeiro == QTD)
+        {
+            aux = 0;
+        }
+        if(aux != fila.ultimo || fila.tam != -1 )
+        {
+            fila.primeiro = aux;
+            printf("Aviao decolando...\n#%d\t Prefixo: %s\tNome: %s\tCia: %s\n\n",i+1,fila.p[fila.primeiro].prefixo,fila.p[fila.primeiro].nome,fila.p[fila.primeiro].cia);
+            fila.primeiro++;
+            fila.tam--;
+            aux++;
+            if(fila.tam == -1)
+            {
+                fila.primeiro = 0;
+                fila.ultimo = 0;
+                fila.tam = -1;
             }
-                if(fila.primeiro == QTD){
-                    aux = 0;
-                }
-                    if(aux != fila.ultimo || fila.tam != -1 ){
-                        fila.primeiro = aux;
-                        printf("Aviao decolando...\n#%d\t Prefixo: %s\tNome: %s\tCia: %s\n\n",i+1,fila.p[fila.primeiro].prefixo,fila.p[fila.primeiro].nome,fila.p[fila.primeiro].cia);
-                        fila.primeiro++;
-                        fila.tam--;
-                        aux++;
-                            if(fila.tam == -1){
-                                fila.primeiro = 0;
-                                fila.ultimo = 0;
-                                fila.tam = -1;
-                            }
-                    }
-            }
+        }
+    }
     return fila;
 }
+
+
