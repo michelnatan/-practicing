@@ -1,4 +1,4 @@
-# -practicing
+# Practicing
  Practicing language in C.
  
 Creating a circular list using vectors, functions, loops, cases and decision structures.
